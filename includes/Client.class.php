@@ -4,6 +4,7 @@
 
     class Client{
 
+        //crea una tarea
         public static function Create_task($name, $description){
             $database = new Database();
             $conn = $database->getConnection();
@@ -19,5 +20,24 @@
                 return ['message' => 'Task not created', 'statusCode' => 500];
             }
         }
+
+
+        //obtiene todas las tareas
+        public static function Get_all_tasks(){
+            $database = new Database();
+            $conn = $database->getConnection();
+
+            $query = $conn->prepare('SELECT * FROM tasks');
+            
+            if($query->execute()){
+                $tasks = $query->fetchAll();
+                return ['status' => 200, 'data' =>  $tasks];
+            }else{
+                return ['status' => 500, 'message' => 'Error getting tasks'];
+            }
+        }
     }
+
+
+
 ?>
