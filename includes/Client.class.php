@@ -36,6 +36,26 @@
                 return ['status' => 500, 'message' => 'Error getting tasks'];
             }
         }
+
+
+        public static function get_task_by_id($id){
+            $database = new Database();
+            $conn = $database->getConnection();
+
+            $query = $conn->prepare('SELECT * FROM tasks WHERE id = :id');
+            $query->bindParam(':id', $id);
+
+            if($query->execute()){
+                $task = $query->fetch();
+                return ['status' => 200, 'data' =>  $task];
+            }else{
+                return ['status' => 500, 'message' => 'Error getting task'];
+            }
+        }
+
+
+
+
     }
 
 
