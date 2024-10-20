@@ -2,7 +2,7 @@
 
     require_once 'Database.class.php';
 
-    class Client{
+    class Task{
 
         //crea una tarea
         public static function Create_task($name, $description){
@@ -56,6 +56,11 @@
 
         //Elimina una tarea
         public static function delete_task($id){
+
+            if(!self::task_exists($id)){
+                return ['message' => 'Task not found', 'statusCode' => 404];
+            }
+            
             $database = new Database();
             $conn = $database->getConnection();
 
@@ -72,6 +77,11 @@
 
         //Actualiza una tarea
         public static function update_task($id, $name, $description, $status){
+
+            if(!self::task_exists($id)){
+                return ['message' => 'Task not found', 'statusCode' => 404];
+            }
+
             $database = new Database();
             $conn = $database->getConnection();
 
@@ -86,6 +96,18 @@
             }else{
                 return ['message' => 'Task not updated', 'statusCode' => 500];
             }
+        }
+
+
+        //Valida si una tarea existe
+        private static function task_exists($id){
+            $database = new Database();
+            $conn = $database->getConnection();
+
+            $query = $conn->prepare('SELECT id FROM tasks WHERE id = :id');
+            $query->bindParam(':id', $id);
+            $query->execute();
+            return $query->fetch();
         }
 
 
