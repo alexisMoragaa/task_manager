@@ -2,7 +2,7 @@
 
     require_once 'Database.class.php';
 
-    class Client{
+    class Task{
 
         //crea una tarea
         public static function Create_task($name, $description){

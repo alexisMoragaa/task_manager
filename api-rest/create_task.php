@@ -1,5 +1,5 @@
 <?php 
-    require_once '../includes/Client.class.php';
+    require_once '../includes/Task.class.php';
 
     header('Content-Type: application/json');
 
@@ -8,7 +8,7 @@
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if(isset($_POST['name']) && isset($_POST['description'])){
-                $result =  Client::Create_task($_POST['name'], $_POST['description']);
+                $result =  Task::Create_task($_POST['name'], $_POST['description']);
                 echo json_encode($result['message']);
                 http_response_code($result['statusCode']);
             }else{

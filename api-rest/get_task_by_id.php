@@ -1,5 +1,5 @@
 <?php
-    include '../includes/Client.class.php';
+    include '../includes/Task.class.php';
     
     header('Content-Type: application/json');
 
@@ -8,7 +8,7 @@
         if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
             if($_GET['id']){
-                $result =  Client::Get_task_by_id($_GET['id']);
+                $result =  Task::Get_task_by_id($_GET['id']);
                 echo json_encode($result['data']);
                 http_response_code($result['status']);
             }else{
