@@ -7,12 +7,14 @@
 
         if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
-            if($_GET['id']){
-                $result =  Task::Get_task_by_id($_GET['id']);
+            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+            if($id){
+                $result =  Task::Get_task_by_id($id);
                 echo json_encode($result['data']);
                 http_response_code($result['status']);
             }else{
-                echo json_encode(array('message' => 'Task not found. Id is missing'));
+                echo json_encode(array('message' => 'Task not found. Id is missing or isn´t valid'));
                 http_response_code(400);
             }
 
