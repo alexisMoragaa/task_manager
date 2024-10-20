@@ -55,7 +55,7 @@
 
 
         //Elimina una tarea
-        public function delete_task($id){
+        public static function delete_task($id){
             $database = new Database();
             $conn = $database->getConnection();
 
@@ -70,10 +70,24 @@
         }
 
 
+        //Actualiza una tarea
+        public static function update_task($id, $name, $description, $status){
+            $database = new Database();
+            $conn = $database->getConnection();
+
+            $query = $conn->prepare('UPDATE tasks SET name = :name, description = :description, status = :status where id = :id');
+            $query->bindParam(':id', $id);
+            $query->bindParam(':name', $name);
+            $query->bindParam(':description', $description);
+            $query->bindParam(':status', $status);
+
+            if($query->execute()){
+                return ['message' => 'Task updated successfully', 'statusCode' => 200];
+            }else{
+                return ['message' => 'Task not updated', 'statusCode' => 500];
+            }
+        }
 
 
     }
-
-
-
 ?>
