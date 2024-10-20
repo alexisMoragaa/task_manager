@@ -37,7 +37,7 @@
             }
         }
 
-
+        //Obtiene una tarea en espesifico
         public static function get_task_by_id($id){
             $database = new Database();
             $conn = $database->getConnection();
@@ -50,6 +50,22 @@
                 return ['status' => 200, 'data' =>  $task];
             }else{
                 return ['status' => 500, 'message' => 'Error getting task'];
+            }
+        }
+
+
+        //Elimina una tarea
+        public function delete_task($id){
+            $database = new Database();
+            $conn = $database->getConnection();
+
+            $query = $conn->prepare('DELETE FROM tasks WHERE id = :id');
+            $query->bindParam(':id', $id);
+
+            if($query->execute()){
+                return ['message' => 'Task deleted successfully', 'statusCode' => 200];
+            }else{
+                return ['message' => 'Task not deleted', 'statusCode' => 500];
             }
         }
 
